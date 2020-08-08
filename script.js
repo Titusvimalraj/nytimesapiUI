@@ -94,10 +94,16 @@ let getNewsData = async(sectionName) => {
 
         if (data.results.length > 0) {
             let newCardInfo = data.results;
-            //console.log(newCardInfo);
+            console.log(newCardInfo);
 
             for (let i = 0; i < newCardInfo.length; i++) {
                 let imgSrc = '';
+                let newsUrl = newCardInfo[i].short_url;
+
+                if (newsUrl == "" || newsUrl == undefined || newsUrl == null || newsUrl.length == 0) {
+                    newsUrl = newCardInfo[i].url;
+                }
+
                 if (newCardInfo[i].hasOwnProperty('multimedia') && newCardInfo[i]['multimedia'] != null) {
                     //console.log(i);
                     //console.log(newCardInfo[i].multimedia);
@@ -106,7 +112,7 @@ let getNewsData = async(sectionName) => {
 
                 let currentCollapseData = `    <div class="col-8 offset-2 offset-lg-0 col-lg-6 mt-4">
                     <div class="card mb-3">
-                    ${sectionName}
+                    ${sectionName} - ${newCardInfo[i].item_type}
                         <div class="row no-gutters">
                             
                             <div class="col-md-4 order-md-1">
@@ -115,13 +121,15 @@ let getNewsData = async(sectionName) => {
                             <div class="col-md-8">
                                 <div class="card-body">
                                     <h5 class="card-title">${newCardInfo[i].title}</h5>
-                                    <p class="card-text"><small class="text-muted">${new Date(newCardInfo[i].published_date).toDateString()}</small></p>
+                                    <p class="card-text"><small class="text-muted">${new Date(newCardInfo[i].created_date).toDateString()}</small></p>
                                     <p class="card-text">${newCardInfo[i].abstract}</p>
                                     
-                                    <a href="${newCardInfo[i].short_url}" class="card-link">Continue Reading</a>
+                                    <a href="${newsUrl}" class="card-link">Continue Reading</a>
                                 </div>
     
-                                
+                                <div class="card-footer">
+                                    ${newCardInfo[i].byline}
+                                </div>
                             </div>                        
                         </div>
                     </div>
@@ -134,12 +142,6 @@ let getNewsData = async(sectionName) => {
             document.getElementById(`${sectionName}Collapse`).innerHTML = accordionCollapseContent;
 
         }
-
-
-
-
-
-
 
     } catch (error) {
         let errorElement = document.createElement('div');
@@ -175,10 +177,16 @@ let getFirstData = async(sectionName = 'arts') => {
 
         if (data.results.length > 0) {
             let newCardInfo = data.results;
-            //console.log(newCardInfo);
+            console.log(newCardInfo);
 
             for (let i = 0; i < newCardInfo.length; i++) {
                 let imgSrc = '';
+                let newsUrl = newCardInfo[i].short_url;
+
+                if (newsUrl == "" || newsUrl == undefined || newsUrl == null || newsUrl.length == 0) {
+                    newsUrl = newCardInfo[i].url;
+                }
+
                 if (newCardInfo[i].hasOwnProperty('multimedia') && newCardInfo[i]['multimedia'] != null) {
                     //console.log(i);
                     //console.log(newCardInfo[i].multimedia);
@@ -187,7 +195,7 @@ let getFirstData = async(sectionName = 'arts') => {
 
                 let currentCollapseData = `    <div class="col-8 offset-2 offset-lg-0 col-lg-6 mt-4">
                     <div class="card mb-3">
-                    ${sectionName}
+                    ${sectionName} - ${newCardInfo[i].item_type}
                         <div class="row no-gutters">
                             
                             <div class="col-md-4 order-md-1">
@@ -196,13 +204,15 @@ let getFirstData = async(sectionName = 'arts') => {
                             <div class="col-md-8">
                                 <div class="card-body">
                                     <h5 class="card-title">${newCardInfo[i].title}</h5>
-                                    <p class="card-text"><small class="text-muted">${new Date(newCardInfo[i].published_date).toDateString()}</small></p>
+                                    <p class="card-text"><small class="text-muted">${new Date(newCardInfo[i].created_date).toDateString()}</small></p>
                                     <p class="card-text">${newCardInfo[i].abstract}</p>
                                     
-                                    <a href="${newCardInfo[i].short_url}" class="card-link">Continue Reading</a>
+                                    <a href="${newsUrl}" class="card-link">Continue Reading</a>
                                 </div>
     
-                                
+                                <div class="card-footer">
+                                    ${newCardInfo[i].byline}
+                                </div>
                             </div>                        
                         </div>
                     </div>
@@ -215,11 +225,6 @@ let getFirstData = async(sectionName = 'arts') => {
             document.getElementById(`${sectionName}Collapse`).innerHTML = accordionCollapseContent;
 
         }
-
-
-
-
-
 
 
     } catch (error) {
